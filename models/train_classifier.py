@@ -16,7 +16,7 @@ from nltk.stem import WordNetLemmatizer
 from nltk.tokenize import word_tokenize
 from sklearn.model_selection import GridSearchCV
 
-nltk.download('punkt')
+# nltk.download('punkt')
 
 def load_data(database_filepath):
     """
@@ -32,6 +32,7 @@ def load_data(database_filepath):
     """
     engine = create_engine(f'sqlite:///{database_filepath}')
     df = pd.read_sql_table('data', engine)
+    df.drop(columns=['Message length','ShortLong message'], inplace=True)
     X = df['message']
     Y = df.iloc[:, 4:]  # Assuming the first 4 columns are ID, message, etc.
     category_names = Y.columns
@@ -127,8 +128,8 @@ def main():
             print('Evaluating model...')
             evaluate_model(model, X_test, Y_test, category_names)
 
-            print('Saving model...\n    MODEL: {}'.format(model_filepath))
-            save_model(model, model_filepath)
+            print('Saving model...\n    MODEL: {}'.format(model_full_path))
+            save_model(model, model_full_path)
 
             print('Trained model saved!')
         else:

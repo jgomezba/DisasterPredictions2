@@ -12,7 +12,7 @@ import joblib
 from sqlalchemy import create_engine
 import nltk
 
-nltk.download('wordnet')
+# nltk.download('wordnet')
 
 app = Flask(__name__)
 
